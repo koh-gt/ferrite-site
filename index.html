@@ -1,36 +1,136 @@
-﻿
-
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ferrite Core</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- Header-->
+    <header class="header">
+      <!-- Top Header -->
+      <div class="header__top">
+        <div class="logo">
+          <img src="images/headerlogo-64px.png" alt="headerlogo-64px" />
+        </div>
+        
+        <nav>
+          <ul class="list list--inline">
+            <li class="list__item text text--small text--regular"><a href="https://github.com/koh-gt/ferrite-core/releases/tag/v1.2.3">Download</a></li>
+            <li class="list__item text text--small text--regular"><a href="https://github.com/koh-gt/ferrite-core">Source</a></li>
+            <li class="list__item text text--small text--regular"><a href="http://explorer.ferritecoin.org">Explorer</a></li>
+            <li class="list__item text text--small text--regular"><a href="https://github.com/koh-gt/ferrite-core/wiki">About</a></li>
+          </ul>
+        </nav>
+      </div>
+      <!-- Header Body -->
+      <div class="header__body">
+        <div class="grid grid--1x2 grid--centered grid-gap--small">
+          <img src="images/ferrite-core-main-512px.png" alt="Bitcoin illustration" class="btc-illustration" data-rellax-horizontal-speed="2" data-rellax-vertical-scroll-axis="x"/>
+          <div class="value-proposition">
+            <h1 class="value-proposition__title">Ferrite Core</h1>
+            <p class="value-proposition__text text text--small text--regular">Version 1.2.3</p>
+            <button class="value-proposition__button btn btn--flex btn--accent">
+              <span class="text--standart text--medium"><a href="https://github.com/koh-gt/ferrite-core/releases/download/v1.2.3/ferrite-1.2.3-win64-setup.exe">Download for Windows x64</a></span>
+              <div class="chiron-icon-container">
+                <img src="images/chevron-right.svg" alt="Right Icon" />
+              </div>
+            </button>
+            <button class="value-proposition__button btn btn--flex btn--accent">
+              <span class="text--standart text--medium"><a href="https://github.com/koh-gt/ferrite-core/releases/download/v1.2.3/ferrite-1.2.3-win32-setup.exe">Download for Windows x86</a></span>
+              <div class="chiron-icon-container">
+                <img src="images/chevron-right.svg" alt="Right Icon" />
+              </div>
+            </button>
+          </div>    
+        </div>
+      </div>
+      <!-- <img class="background-item-1" src="images/background-item-1.svg" alt="" /> -->
+      <!-- <img class="background-item-2" src="images/background-item-2.svg" alt="" /> -->
+      <div class="media-container">
+        <div class="media">
+          <div class="icon-container">
+            <svg class="media-icon">
+              <use xlink:href="images/media-icons-sprite.svg#person"></use>
+            </svg>
+          </div>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="styles.css">
-  <title>
-    Ferrite Core website
-  </title>
-</head>
-
-<body class="index-page">
-  <h1>
-    <img src="./assets/img/ferrite-core-200px.png" alt="ferrite core logo"> 
-    <br><p>Ferrite Core v1.2.3</p><br>
-    Github: <a href="https://github.com/koh-gt/ferrite-core">Link</a><br>
-    <a href="https://github.com/koh-gt/ferrite-core/releases/download/v1.2.3/ferrite-1.2.3-win64-setup.exe">
-    Download
-    </a> Windows 64-bit Installer v1.2.3<br>
-    <a href="https://github.com/koh-gt/ferrite-core/releases/download/v1.2.3/ferrite-1.2.3-win32-setup.exe">
-    Download
-    </a> Windows 32-bit Installer v1.2.3<br>
-    <a href="https://github.com/koh-gt/ferrite-core/releases/download/v1.2.3/ferrite-core-1.2.3-unix.7z">
-    Download
-    </a> Unix (Linux OS X) v1.2.3<br>
-    <br>
-    <a href="http://explore.ferriteco.in/">
-    Block Explorer
-    </a>
-  </h1>
-</body>
-
+          <div>
+            <h2><p id="getblockcount"></p></h2>
+            <p class="text text--small text--regular text--muted">Current Block Height</p>
+          </div>
+          <script> // gets live block count
+            const myInit = {
+              method: 'GET',
+              mode: 'cors',
+              cache: 'default',
+            };
+            var returnstring = ""
+            fetch('http://118.189.201.104:50102/api/getblockcount', myInit)
+              .then((response) => response.json())
+              .then((data) => {document.getElementById("getblockcount").innerHTML = data; console.log(data)})
+          </script>
+        </div>
+        <div class="media">
+          <div class="icon-container">
+            <svg class="media-icon">
+              <use xlink:href="images/media-icons-sprite.svg#bar-chart"></use>
+            </svg>
+          </div>
+          <div>
+            <h2><p id="getmoneysupply"></p></h2>
+            <p class="text text--small text--regular text--muted">Circulating Supply</p>
+          </div>
+          <script> // gets money supply
+            const myInit2 = {
+              method: 'GET',
+              mode: 'cors',
+              cache: 'default',
+            };
+            var returnstring = ""
+            fetch('http://118.189.201.104:50102/ext/getmoneysupply', myInit2)
+              .then((response) => response.json())
+              .then((data) => {
+                numdatafloat = parseFloat(data);
+                numdata = Math.floor(numdatafloat);
+                document.getElementById("getmoneysupply").innerHTML = numdata; 
+                console.log(data);
+              })
+          </script>
+        </div>
+        <div class="media">
+          <div class="icon-container">
+            <svg class="media-icon">
+              <use xlink:href="images/media-icons-sprite.svg#earth"></use>
+            </svg>
+          </div>
+          <div>
+            <h2><p id="getmoneypercent"></p></h2>
+            <p class="text text--small text--regular text--muted">of maximum supply mined</p>
+          </div>
+          <script> // gets money supply
+            const myInit3 = {
+              method: 'GET',
+              mode: 'cors',
+              cache: 'default',
+            };
+            var returnstring = ""
+            fetch('http://118.189.201.104:50102/ext/getmoneysupply', myInit3)
+              .then((response) => response.json())
+              .then((data) => {
+                numdatafloat = parseFloat(data);
+                percentagesupply = (numdatafloat * 100 / 60221400).toFixed(3)
+                numdata = percentagesupply + "%"
+                document.getElementById("getmoneypercent").innerHTML = numdata; 
+                console.log(data);
+              })
+          </script>
+        </div>
+      </div>
+    </header>
+  </body>
 </html>
